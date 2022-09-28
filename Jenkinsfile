@@ -56,5 +56,13 @@ pipeline {
 
          
        }
+       stage('Docker Image'){
+           steps{
+               
+               sh 'docker build -t user-service:latest'
+           }
+
+       }
+
     }
 }
