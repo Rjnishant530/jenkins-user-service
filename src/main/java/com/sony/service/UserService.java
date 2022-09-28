@@ -36,8 +36,8 @@ public class UserService {
 		userMap.put(user.getUuid(), user);
 		user = new User("Laura","Callahan","(206) 555-1189","Laura received a BA in psychology from the University of Washington.  She has also completed a course in business French.  She reads and writes French.");
 		userMap.put(user.getUuid(), user);
-//		user = new User("Anne","Dodsworth","(71) 555-4444","Anne has a BA degree in English from St. Lawrence College.  She is fluent in French and German.");
-//		userMap.put(user.getUuid(), user);
+		user = new User("Anne","Dodsworth","(71) 555-4444","Anne has a BA degree in English from St. Lawrence College.  She is fluent in French and German.");
+		userMap.put(user.getUuid(), user);
 
 
 	}
