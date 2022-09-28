@@ -1,7 +1,5 @@
 package com.sony.controller;
 
-import javax.xml.datatype.DatatypeFactory;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
