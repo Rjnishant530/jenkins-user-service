@@ -64,7 +64,7 @@ pipeline {
        stage('Docker Image'){
            steps{
                
-               sh 'docker build -t ${DOCKER_IMAGE_NAME}:latest -t ${DOCKER_IMAGE_NAME}:{env.BUILD_ID} .'
+               sh 'docker build -t ${DOCKER_IMAGE_NAME}:latest -t ${DOCKER_IMAGE_NAME}:${env.BUILD_ID} .'
            }
 
        }
