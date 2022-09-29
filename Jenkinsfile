@@ -2,7 +2,7 @@ pipeline {
     agent any
     
     environment {
-        DOCKER_IMAGE_NAME='user-service-container'
+        DOCKER_IMAGE_NAME='user-service'
         DOCKER_TEMP_CONTAINER_NAME='user-temp-container'
     }
 
@@ -84,6 +84,7 @@ pipeline {
         
         always{
             sh 'docker stop ${DOCKER_TEMP_CONTAINER_NAME}'
+            sh 'docker rmi  ${DOCKER_IMAGE_NAME}:latest ${DOCKER_IMAGE_NAME}:${BUILD_ID}
         }
 
     }
