@@ -1,5 +1,10 @@
 pipeline {
     agent any
+    
+    environment {
+        DOCKER_IMAGE_NAME='user-service-container'
+        DOCKER_TEMP_CONTAINER_NAME='user-temp-container'
+    }
 
     stages {
         stage('Clean') {
@@ -59,13 +64,13 @@ pipeline {
        stage('Docker Image'){
            steps{
                
-               sh 'docker build -t user-service:latest .'
+               sh 'docker build -t ${DOCKER_IMAGE_NAME}:latest -t ${DOCKER_IMAGE_NAME}:{env.BUILD_ID} .'
            }
 
        }
        stage('Integration'){
            steps{
-               sh 'docker run -dp 7070:8001 --rm --name user-service-container user-service:latest'
+               sh 'docker run -dp 7070:8001 --rm --name ${DOCKER_TEMP_CONTAINER_NAME} ${DOCKER_IMAGE_NAME}:latest'
                sleep 10
                sh 'curl -i http://localhost:7070/api/users'
            }
@@ -78,7 +83,7 @@ pipeline {
     post{
         
         always{
-            sh 'docker stop user-service-container'
+            sh 'docker stop ${DOCKER_TEMP_CONTAINER_NAME}'
         }
 
     }
