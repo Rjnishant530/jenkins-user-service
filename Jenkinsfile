@@ -4,6 +4,7 @@ pipeline {
     environment {
         DOCKER_IMAGE_NAME='user-service'
         DOCKER_TEMP_CONTAINER_NAME='user-temp-container'
+        DOCKER_REPO="rjnishant"
     }
 
     stages {
@@ -64,19 +65,29 @@ pipeline {
        stage('Docker Image'){
            steps{
                
-               sh 'docker build -t ${DOCKER_IMAGE_NAME}:latest -t ${DOCKER_IMAGE_NAME}:${BUILD_ID} .'
+               sh 'docker build -t ${DOCKER_REPO}/${DOCKER_IMAGE_NAME}:latest -t ${DOCKER_REPO}/${DOCKER_IMAGE_NAME}:${BUILD_ID} .'
            }
 
        }
        stage('Integration'){
            steps{
-               sh 'docker run -dp 7070:8001 --rm --name ${DOCKER_TEMP_CONTAINER_NAME} ${DOCKER_IMAGE_NAME}:latest'
+               sh 'docker run -dp 7070:8001 --rm --name ${DOCKER_TEMP_CONTAINER_NAME} ${DOCKER_REPO}/${DOCKER_IMAGE_NAME}:latest'
                sleep 10
                sh 'curl -i http://localhost:7070/api/users'
            }
+         }
+		stage('docker publish'){
+		    
+		    steps{
+		        withDockerRegistry([credentialsId: 'docker_login', url: '']){
+		        sh "docker push ${DOCKER_REPO}/${DOCKER_IMAGE_NAME}:latest"                                                       
+		        sh "docker push ${DOCKER_REPO}/${DOCKER_IMAGE_NAME}:${BUILD_ID}"                                                       
+		                                                               
+		                                                           }
 
-           
-       }
+		    }
+
+		}
 
 
     }
