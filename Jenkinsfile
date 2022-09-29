@@ -84,7 +84,7 @@ pipeline {
         
         always{
             sh 'docker stop ${DOCKER_TEMP_CONTAINER_NAME}'
-            sh 'docker rmi  ${DOCKER_IMAGE_NAME}:latest ${DOCKER_IMAGE_NAME}:${BUILD_ID}
+            sh "docker rmi  ${DOCKER_IMAGE_NAME}:latest ${DOCKER_IMAGE_NAME}:${env.BUILD_ID}"
         }
 
     }
