@@ -63,6 +63,24 @@ pipeline {
            }
 
        }
+       stage('Integration'){
+           steps{
+               sh 'docker -dp 7070:8001 --rm --name user-service-container user-service:latest'
+               sleep 10
+               sh 'curl -i http://localhost:7070/api/users'
+           }
+
+           
+       }
+
 
     }
+    post{
+        
+        always{
+            sh 'docker stop user-service-container'
+        }
+
+    }
+
 }
